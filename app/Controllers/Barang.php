@@ -4,11 +4,13 @@ namespace App\Controllers;
 
 class Barang extends BaseController
 {
+    protected $requestS;
     public function __construct()
     {
         helper('form');
         $this->validation = \Config\Services::validation();
         $this->session = session();
+        $this->requestS = service("request");
     }
 
     public function index()
@@ -23,7 +25,7 @@ class Barang extends BaseController
     //detail
     public function view()
     {
-        $id = $this->request->uri->getSegment(3); // 3 didapatkan dari - barang/view/id
+        $id = $this->requestS->uri->getSegment(3); // 3 didapatkan dari - barang/view/id
         $barangModel = new \App\Models\BarangModel();
 
         $barang = $barangModel->find($id);
@@ -35,8 +37,8 @@ class Barang extends BaseController
 
     public function create()
     {
-        if ($this->request->getPost()) {
-            $data = $this->request->getPost();
+        if ($this->requestS->getPost()) {
+            $data = $this->requestS->getPost();
             $this->validation->run($data, 'barang');
             $errors = $this->validation->getErrors();
 
@@ -46,7 +48,7 @@ class Barang extends BaseController
 
                 $barang->fill($data);
                 // $barang->gambar = langsung memanggil di entities
-                $barang->gambar = $this->request->getFile('gambar');
+                $barang->gambar = $this->requestS->getFile('gambar');
                 $barang->created_by = $this->session->get('id');
                 $barang->created_date = date("Y-m-d H:i:s");
 
@@ -66,12 +68,12 @@ class Barang extends BaseController
 
     public function update()
     {
-        $id = $this->request->uri->getSegment(3);
+        $id = $this->requestS->uri->getSegment(3);
         $barangModel = new \App\Models\BarangModel();
         $barang = $barangModel->find($id);
 
-        if ($this->request->getPost()) {
-            $data = $this->request->getPost();
+        if ($this->requestS->getPost()) {
+            $data = $this->requestS->getPost();
             $this->validation->run($data, 'barangUpdate');
             $errros = $this->validation->getErrors();
 
@@ -80,8 +82,8 @@ class Barang extends BaseController
                 $b->id = $id;
                 $b->fill($data);
 
-                if ($this->request->getFile('gambar')->isValid()) {
-                    $b->gambar = $this->request->getFile('gambar');
+                if ($this->requestS->getFile('gambar')->isValid()) {
+                    $b->gambar = $this->requestS->getFile('gambar');
                 }
 
                 $b->updated_by = $this->session->get('id');
@@ -101,7 +103,7 @@ class Barang extends BaseController
 
     public function delete()
     {
-        $id = $this->request->uri->getSegment(3);
+        $id = $this->requestS->uri->getSegment(3);
         $barangModel = new \App\Models\BarangModel();
 
         $delete = $barangModel->delete($id);
