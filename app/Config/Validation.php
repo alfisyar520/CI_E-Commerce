@@ -85,4 +85,65 @@ class Validation
             'required' => '{field} harus diisi.',
         ],
     ];
+
+    // is_natural = bilangan asli
+    public $barang = [
+        'nama' => [
+            'rules' => 'required|min_length[3]',
+        ],
+        'harga' => [
+            'rules' => 'required|is_natural',
+        ],
+        'stok' => [
+            'rules' => 'required|is_natural',
+        ],
+        'gambar' => [
+            'rules' => 'uploaded[gambar]',
+        ],
+    ];
+
+    public $barang_errors = [
+        'nama' => [
+            'required' => '{field} harus diisi.',
+            'min_length' => '{field} minimal 5 karakter.',
+        ],
+        'harga' => [
+            'required' => '{field} harus diisi.',
+            'is_natural' => '{field} tidak boleh negatif.',
+        ],
+        'stok' => [
+            'required' => '{field} harus diisi.',
+            'is_natural' => '{field} tidak boleh negatif.',
+        ],
+        'gambar' => [
+            'uploaded' => '{field} harus di upload.',
+        ],
+    ];
+
+    public $barangUpdate = [
+        'nama' => [
+            'rules' => 'required|min_length[3]',
+        ],
+        'harga' => [
+            'rules' => 'required|is_natural',
+        ],
+        'stok' => [
+            'rules' => 'required|is_natural',
+        ],
+    ];
+
+    public $barangUpdate_errors = [
+        'nama' => [
+            'required' => '{field} harus diisi.',
+            'min_length' => '{field} minimal 5 karakter.',
+        ],
+        'harga' => [
+            'required' => '{field} harus diisi.',
+            'is_natural' => '{field} tidak boleh negatif.',
+        ],
+        'stok' => [
+            'required' => '{field} harus diisi.',
+            'is_natural' => '{field} tidak boleh negatif.',
+        ],
+    ];
 }
