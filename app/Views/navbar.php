@@ -14,6 +14,7 @@ $session = session();
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?=site_url('home/index')?>">Home</a>
         </li>
+        <?php if (session()->get('role') == 0): ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown01" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Barang
@@ -23,6 +24,11 @@ $session = session();
             <li><a class="dropdown-item" href="<?=site_url('barang/create')?>">Tambah Barang</a></li>
           </ul>
         </li>
+        <?php else: ?>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="<?=site_url('etalase/index')?>">Etalase</a>
+        </li>
+        <?php endif?>
       </ul>
       <?php endif?>
       <div class="d-flex">

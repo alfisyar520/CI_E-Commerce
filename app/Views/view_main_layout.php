@@ -41,14 +41,14 @@
   <?=$this->include('navbar')?>
 
 
-    <main role="main" class="container">
-      <?=$this->renderSection('content');?>
-    </main>
+      <main role="main" class="container">
+        <?=$this->renderSection('content');?>
+      </main>
 
 
-    <script src="<?=base_url('/bootstrap-5.0.0/js/bootstrap.bundle.min.js')?>"></script>
-    <script src="<?=base_url('jquery-3.6.0.min.js')?>"></script>
+      <script src="<?=base_url('/bootstrap-5.0.0/js/bootstrap.bundle.min.js')?>"></script>
+      <script src="<?=base_url('jquery-3.6.0.min.js')?>"></script>
 
-
+      <?=$this->renderSection('script')?>
   </body>
 </html>
