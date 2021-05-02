@@ -46,6 +46,7 @@ class Etalase extends BaseController
                 $jumlah_pembelian = $this->requestS->getPost('jumlah');
                 $barang = $barangModel->find($id_barang);
                 $entityBarang = new \App\Entities\Barang();
+                $entityBarang->id = $id_barang;
                 $entityBarang->stok = $barang->stok - $jumlah_pembelian;
                 $barangModel->save($entityBarang);
 
