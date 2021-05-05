@@ -14,6 +14,7 @@ class Transaksi extends BaseController
         $this->validation = \Config\Services::validation();
         $this->session = session();
         $this->requestS = service("request");
+        $this->email = \Config\Services::email();
     }
 
     public function view()
@@ -79,9 +80,35 @@ class Transaksi extends BaseController
         // exit();
 
         //line ini penting untuk ci4
-        $this->response->setContentType('application/pdf');
+        // $this->response->setContentType('application/pdf');
 
         //Close and output PDF document
-        $pdf->Output('Invoice.pdf', 'I');
+        $pdf->Output(__DIR__ . '/../../public/uploads/Invoice.pdf', 'F');
+
+        $attachment = base_url('uploads/Invoice.pdf');
+
+        $message = "<h1>Invoice Pembelian</h1><p>Kepada " . $pembeli->username . ". Berikut invoice atas pembelian " . $barang->nama . ".";
+
+        $this->sendEmail($attachment, 'alfispranata@gmail.com', 'Invoice', $message);
+
+        return redirect()->to(site_url('transaksi/index'));
     }
+
+    private function sendEmail($attachment, $to, $title, $message)
+    {
+        $this->email->setFrom('alfispranata@gmail.com', 'alfis pranata');
+        $this->email->setTo($to);
+
+        $this->email->attach($attachment);
+
+        $this->email->setSubject($title);
+        $this->email->setMessage($message);
+
+        if (!$this->email->send()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }
